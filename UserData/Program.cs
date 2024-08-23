@@ -9,17 +9,17 @@ namespace UserData
             while (true)
             {
                 //FirstName
-                Console.WriteLine(GetMessage("first name"));
-                string name = GetStringDataFromUser();
-                if (IsExit(name))
+                string firstName = string.Empty;
+                firstName = UserDataHandler(nameof(firstName));
+                if (IsExit(firstName))
                 {
                     PrintExit();
                     break;
                 }
 
                 //LastName
-                Console.WriteLine(GetMessage("last name"));
-                string lastName = GetStringDataFromUser();
+                string lastName = string.Empty;
+                lastName = UserDataHandler(nameof(lastName));
                 if (IsExit(lastName))
                 {
                     PrintExit();
@@ -28,13 +28,14 @@ namespace UserData
                 PrintSeperator();
 
                 //Age
-                Console.WriteLine(GetMessage("age"));
-                int age = GetNumericDataFromUser();
+                int age = default(int);
+                Console.WriteLine(GetMessage(nameof(age)));
+                age = GetNumericDataFromUser();
                 PrintSeperator();
 
                 //PhoneNumber
-                Console.WriteLine(GetMessage("phone number"));
-                string phoneNumber = GetStringDataFromUser();
+                string phoneNumber = string.Empty;
+                phoneNumber = UserDataHandler(nameof(phoneNumber));
                 if (IsExit(phoneNumber))
                 {
                     PrintExit();
@@ -43,11 +44,11 @@ namespace UserData
                 PrintSeperator();
 
                 //Show Profile
-                PrintProfile(firstName: name,lastName: lastName,age:  age, phoneNumber: phoneNumber);
+                PrintProfile(firstName: firstName, lastName: lastName, age: age, phoneNumber: phoneNumber);
             }
         }
 
-        static void PrintProfile(string firstName,string lastName, int age,string phoneNumber)
+        static void PrintProfile(string firstName, string lastName, int age, string phoneNumber)
         {
             PrintUserOutput("firstName", firstName);
             PrintUserOutput("lastName", lastName);
@@ -74,6 +75,13 @@ namespace UserData
         static void PrintUserOutput(string property, string str)
         {
             Console.WriteLine($"You enter {property}: {str} !!");
+        }
+
+        static string UserDataHandler(string property)
+        {
+            Console.WriteLine(GetMessage(property));
+            string userData = GetStringDataFromUser();
+            return userData;
         }
 
         static void PrintSeperator()
