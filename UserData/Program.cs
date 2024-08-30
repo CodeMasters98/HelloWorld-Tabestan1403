@@ -20,14 +20,14 @@ namespace UserData
                 //User Define DataType
                 Student student = new Student();
                 student.FirstName = "Parham";
-                
+
                 student.GetFullName();
                 Console.WriteLine(student.FirstName);
 
                 //FirstName 
                 string firstName = string.Empty;
                 int counter = 0;
-                while (true) 
+                while (true)
                 {
                     firstName = UserDataHandler(nameof(firstName));
                     if (IsExit(str: firstName))
@@ -87,7 +87,7 @@ namespace UserData
                         Console.WriteLine($"You tried : {counter} times");
                     }
                 }
-               
+
                 PrintSeperator();
 
                 //PhoneNumber
@@ -114,7 +114,7 @@ namespace UserData
                         Console.WriteLine($"You tried : {counter} times");
                     }
                 }
-                
+
                 PrintSeperator();
 
                 //Show Profile
