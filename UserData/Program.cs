@@ -1,51 +1,143 @@
-﻿using System.Xml.Linq;
+﻿using UserData.Models;
 
 namespace UserData
 {
+    //Class:
+    //User Define DataType
+    //Template For Objects
+    //Container for methods and properties
+
+
     internal class Program
     {
         static void Main(string[] args)
         {
             while (true)
             {
-                //FirstName
+                //Declare Variable
+                //DataType NameVaribale = value;
+
+                //User Define DataType
+                Student student = new Student();
+                student.FirstName = "Parham";
+                
+                student.GetFullName();
+                Console.WriteLine(student.FirstName);
+
+                //FirstName 
                 string firstName = string.Empty;
-                firstName = UserDataHandler(nameof(firstName));
-                if (IsExit(firstName))
+                int counter = 0;
+                while (true) 
                 {
-                    PrintExit();
-                    break;
+                    firstName = UserDataHandler(nameof(firstName));
+                    if (IsExit(str: firstName))
+                    {
+                        PrintExit();
+                        return;
+                    }
+                    if (IsValidName(firstName))
+                    {
+                        counter = 0;
+                        break;
+                    }
+                    else
+                    {
+                        counter++;
+                        Console.WriteLine($"You tried : {counter} times");
+                    }
                 }
 
                 //LastName
                 string lastName = string.Empty;
-                lastName = UserDataHandler(nameof(lastName));
-                if (IsExit(lastName))
+                while (true)
                 {
-                    PrintExit();
-                    break;
+                    lastName = UserDataHandler(nameof(lastName));
+                    if (IsExit(str: lastName, exitCharacter: "O"))
+                    {
+                        PrintExit();
+                        break;
+                    }
+                    if (IsValidName(lastName))
+                    {
+                        counter = 0;
+                        break;
+                    }
+                    else
+                    {
+                        counter++;
+                        Console.WriteLine($"You tried : {counter} times");
+                    }
                 }
                 PrintSeperator();
 
                 //Age
                 int age = default(int);
-                Console.WriteLine(GetMessage(nameof(age)));
-                age = GetNumericDataFromUser();
+                while (true)
+                {
+                    Console.WriteLine(GetMessage(nameof(age)));
+                    age = GetNumericDataFromUser();
+                    if (IsValidAge(age))
+                    {
+                        counter = 0;
+                        break;
+                    }
+                    else
+                    {
+                        counter++;
+                        Console.WriteLine($"You tried : {counter} times");
+                    }
+                }
+               
                 PrintSeperator();
 
                 //PhoneNumber
                 string phoneNumber = string.Empty;
-                phoneNumber = UserDataHandler(nameof(phoneNumber));
-                if (IsExit(phoneNumber))
+                while (true)
                 {
-                    PrintExit();
-                    break;
+                    phoneNumber = UserDataHandler(nameof(phoneNumber));
+                    if (IsExit(str: phoneNumber))
+                    {
+                        PrintExit();
+                        break;
+                    }
+                    //Filter, Clean data
+                    //+98 -> 0
+                    //10 character + 0 start nashode bode -> ye sefr ezafe kone
+                    if (IsValidPhoneNumber(phoneNumber))
+                    {
+                        counter = 0;
+                        break;
+                    }
+                    else
+                    {
+                        counter++;
+                        Console.WriteLine($"You tried : {counter} times");
+                    }
                 }
+                
                 PrintSeperator();
 
                 //Show Profile
                 PrintProfile(firstName: firstName, lastName: lastName, age: age, phoneNumber: phoneNumber);
             }
+        }
+
+        static bool IsExit(string str, string exitCharacter = "E")
+        {
+            str = str.Trim().ToUpper(); //زنجیره
+
+            //Step 1
+            //if (str == exitCharacter)
+            //    return true;
+            //else
+            //    return false;
+
+            //Step 2
+            //bool result = (str == exitCharacter) ? true : false;
+            //return result;
+
+            //Step 3
+            return (str == exitCharacter) ? true : false;
         }
 
         static void PrintProfile(string firstName, string lastName, int age, string phoneNumber)
@@ -54,18 +146,6 @@ namespace UserData
             PrintUserOutput("lastName", lastName);
             PrintUserOutput("age", age.ToString());
             PrintUserOutput("phoneNumber", phoneNumber);
-        }
-
-        static bool IsExit(string str)
-        {
-            if (str == "E" || str == "e")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         //Single line method;
@@ -93,6 +173,15 @@ namespace UserData
         {
             Console.WriteLine("You exits from app!");
         }
+
+        static bool IsValidName(string str)
+            => !string.IsNullOrEmpty(str) && str.Length > 1 ? true : false;
+
+        static bool IsValidAge(int age)
+            => age > 0 ? true : false;
+
+        static bool IsValidPhoneNumber(string str)//09129564205 -> 11 len
+            => !string.IsNullOrEmpty(str) && str.Length == 11 ? true : false;
 
         static string GetStringDataFromUser()
         {
